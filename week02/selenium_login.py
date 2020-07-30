@@ -1,17 +1,23 @@
-import time
-import pyautogui
 from selenium import webdriver
+import time
 
-mobile = pyautogui.prompt(text='请输入手机号', title='登录', default='XXXX')
-password = pyautogui.password(text='请输入密码', title='登录', default='xxxx', mask='*')
+try:
+    browser = webdriver.Chrome()
+    # 打开石墨
+    browser.get("https://shimo.im/login?from=home")
+    time.sleep(1)
 
-browser = webdriver.Chrome()
-browser.get('https://shimo.im/login?from=home')
-time.sleep(1)
+    browser.find_element_by_xpath('//*[@id="root"]/div/div[2]/div/div/div/div[2]/div/div/div[1]/div[1]/div/input') \
+        .send_keys('xxxxx')
+    browser.find_element_by_xpath('//*[@id="root"]/div/div[2]/div/div/div/div[2]/div/div/div[1]/div[2]/div/input') \
+        .send_keys('xxxxx')
 
-browser.find_element_by_xpath('//*[@id="root"]/div/div[2]/div/div/div/div[2]/div/div/div[1]/div[1]/div/input') \
-    .send_keys(mobile)
-browser.find_element_by_xpath('//*[@id="root"]/div/div[2]/div/div/div/div[2]/div/div/div[1]/div[2]/div/input') \
-    .send_keys(password)
-time.sleep(1)
-browser.find_element_by_xpath('//*[@id="root"]/div/div[2]/div/div/div/div[2]/div/div/div[1]/button').click()
+    btn_login = browser.find_element_by_xpath('//*[@id="root"]/div/div[2]/div/div/div/div[2]/div/div/div[1]/button')
+    btn_login.click()
+
+    time.sleep(2)
+
+except Exception as e:
+    print(e)
+finally:
+    browser.close()
